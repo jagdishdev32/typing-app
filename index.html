@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Typing App</title>
+</head>
+
+<body>
+    <div id="overlay">
+        <div style="padding:20px">
+            <div id="text">
+                <p>TimeUp</p>
+                <p class="show-correct"><span id="text-inner"></span></p>
+                <button onclick="off()" class="reload-btn">Restart</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="top-bar flex">
+        <h1>Typing App</h1>
+        <div class="right-top-bar">
+            <h1 id="time">
+                <select name="time-options" id="time-options">
+                    <option value="1" selected>1minute</option>
+                    <option value="2">2minute</option>
+                    <option value="3">3minute</option>
+                    <option value="5">5minute</option>
+                    <option value="10">10minute</option>
+                    <option value="15">15minute</option>
+                </select>
+            </h1>
+            <h1 id="dataType">
+                <select name="dataType-options" id="dataType-options" onchange="pageReload()">
+                    <option value="words" selected>Words</option>
+                    <option value="paragraph">Para</option>
+                    <option value="lorem">Lorem</option>
+                    <!-- <option value="random">Random</option> -->
+                </select>
+            </h1>
+            <a onclick="pageReload()" class="reload-btn reload-main">⟳</a>
+        </div>
+    </div>
+    <p id="data-para"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus vulputate consequat. Nam
+        efficitur purus et ligula ornare porttitor. Proin accumsan eros et risus fringilla dapibus. Cras hendrerit dolor
+        id lorem pulvinar egestas. Pellentesque fermentum, leo mollis scelerisque consectetur, purus nunc elementum
+        neque, sit amet consequat est lorem id nisi. Ut venenatis eget leo eu consequat. Proin ultricies quam quis justo
+        consequat blandit. Nunc vestibulum risus dapibus arcu interdum consequat. Duis faucibus congue nulla nec
+        vestibulum. Ut at nibh ut massa imperdiet luctus. Etiam vulputate, justo a luctus iaculis, risus mi consequat
+        mauris, in accumsan odio eros quis tortor.
+
+        Vestibulum faucibus ullamcorper mi, eu scelerisque dolor vehicula nec. Nam tristique leo in fermentum viverra.
+        Maecenas in auctor velit, non pulvinar nulla. Nulla eu mattis velit. Suspendisse quis elit sed tortor accumsan
+        gravida. Morbi molestie dapibus sapien, at commodo sapien placerat sed. Pellentesque feugiat metus sit amet
+        mauris dignissim congue. Quisque sit amet tortor orci. Aliquam fermentum vehicula tempus. Integer tincidunt,
+        ipsum vitae cursus elementum, mauris justo molestie velit, in dapibus massa elit pellentesque ligula.
+        Suspendisse potenti.
+
+        Nunc imperdiet sem justo, vitae euismod dui tincidunt nec. Duis vestibulum lacinia tortor, eu gravida ante
+        pulvinar id. Suspendisse potenti. Aenean magna purus, aliquet vel nunc eget, dapibus rhoncus elit. Nam augue
+        nunc, interdum nec metus ac, mollis ornare eros. Pellentesque ut porttitor justo, tempus feugiat odio.
+        Pellentesque ac risus ac justo lobortis pellentesque id gravida tellus. Integer finibus neque eu ex sagittis
+        accumsan. Phasellus laoreet elit tellus, nec aliquam sem iaculis porttitor.
+
+        Integer ac eros diam. Donec dictum turpis mauris, at finibus turpis tincidunt sit amet. Nam ut velit et purus
+        porta sagittis. Duis vestibulum ornare lectus, et luctus magna vulputate non. Maecenas dignissim rhoncus
+        fringilla. Aenean non quam ac tellus ultricies imperdiet in in turpis. Proin facilisis et mauris scelerisque
+        fermentum. Integer in euismod orci, vehicula mattis eros. Integer tempor nec quam vel commodo. Phasellus magna
+        magna, dignissim et ex id, auctor viverra nisl. Nullam interdum orci eu massa consectetur, id tempus ante
+        cursus. Morbi semper nibh sapien, vitae lobortis mi euismod non. Ut venenatis augue at lorem venenatis, sed
+        imperdiet ipsum pretium. Suspendisse nibh justo, fermentum eu fringilla ut, placerat eu ante. Quisque viverra mi
+        in placerat tempus. Nulla semper magna vitae blandit porttitor.
+
+        Nam ac felis ut augue eleifend posuere. Proin lacinia nibh sit amet fringilla dapibus. Duis semper leo nec sem
+        fringilla malesuada. Pellentesque scelerisque fermentum felis nec congue. Nam vel lacus vitae neque dictum
+        condimentum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam
+        hendrerit egestas lectus quis scelerisque.
+
+        Donec ante arcu, dictum non orci in, gravida mollis justo. Maecenas risus justo, pellentesque vitae sollicitudin
+        in, viverra eget mauris. Nam id ante non libero malesuada dapibus. In ullamcorper vel nibh quis hendrerit. Nulla
+        commodo consectetur elit, non vestibulum nisi cursus a. Etiam vitae felis sit amet quam sodales mollis. Fusce
+        porta sit amet nunc sed dignissim.
+
+        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent molestie
+        est ex, vitae pretium sem dignissim a. Nulla facilisi. Fusce ex neque, aliquet eu faucibus vitae, maximus non
+        lectus. Maecenas dictum ac ligula sit amet interdum. Cras risus purus, hendrerit sit amet placerat vehicula,
+        ornare vitae nunc. Nunc elementum consectetur diam, eget tristique orci ultrices nec. Nullam nulla metus,
+        molestie vitae rhoncus suscipit, mollis ac nunc. Nullam ac ornare orci.
+
+        Vivamus odio turpis, accumsan id sollicitudin id, imperdiet non mi. Ut feugiat, turpis in venenatis placerat,
+        sapien nibh volutpat justo, feugiat iaculis risus arcu ut tortor. Etiam sed ante et est dapibus tempus. Fusce
+        vestibulum venenatis vulputate. Vestibulum malesuada commodo nunc quis dignissim. Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit. Phasellus non laoreet elit, lacinia fermentum massa.
+
+        Sed vitae erat vel velit efficitur gravida eget egestas leo. Nullam condimentum a quam et consequat. Quisque
+        elit augue, consequat sit amet diam non, vestibulum posuere elit. Quisque eget varius odio, eu convallis purus.
+        Praesent justo nisl, venenatis nec aliquet quis, pretium sit amet tellus. Proin aliquet justo nec lacus
+        eleifend, quis facilisis turpis tincidunt. Praesent id turpis risus. Vestibulum non bibendum felis. Integer in
+        risus ac turpis facilisis placerat. In at fringilla nisi, sit amet ultrices nibh. Nam vehicula ut leo at
+        posuere.
+
+        Pellentesque in scelerisque diam. Etiam vitae feugiat nisl, vel accumsan sapien. Vestibulum lobortis eros et
+        metus luctus, sed bibendum enim eleifend. Aenean ornare lacus ac velit ultricies, vitae sodales dolor faucibus.
+        Proin pharetra tincidunt hendrerit. Aliquam aliquam, nunc a imperdiet auctor, tellus leo ultricies ipsum, ut
+        laoreet felis erat quis diam. Vestibulum fermentum vehicula finibus. Sed nulla turpis, accumsan eget semper at,
+        gravida vel sem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+        Vestibulum quis diam quis nulla mollis dictum sit amet eu quam. Nulla libero ligula, imperdiet at eros eu,
+        blandit accumsan quam. Donec ac bibendum mi. Ut finibus eros non ex lobortis, at scelerisque turpis ornare.
+
+        Sed sollicitudin metus sit amet tristique feugiat. Sed auctor enim risus, ac sollicitudin ligula bibendum
+        luctus. Etiam ullamcorper auctor sapien, sit amet dictum est convallis non. Orci varius natoque penatibus et
+        magnis dis parturient montes, nascetur ridiculus mus. Etiam feugiat lorem sit amet vestibulum mattis. Duis
+        feugiat metus sodales porttitor mattis. Sed euismod risus sit amet dolor elementum ullamcorper. Praesent aliquet
+        diam sit amet nibh cursus, sit amet imperdiet metus euismod. Etiam eu elit et metus tincidunt pellentesque.
+
+        Mauris vehicula mauris a venenatis porta. Fusce sed suscipit metus. Proin eros risus, mollis at porttitor sed,
+        volutpat et turpis. Curabitur in massa eget orci sagittis mollis. Quisque pharetra, arcu vel pretium ultricies,
+        justo lacus commodo dolor, ac ultrices est lacus et turpis. Vivamus dignissim tincidunt dui. Morbi bibendum
+        molestie velit ut vestibulum. Nulla cursus posuere scelerisque. Morbi mattis urna elit, ut suscipit neque
+        egestas in. Nunc vitae turpis dictum, sodales nulla ut, feugiat elit. Maecenas sed velit quis turpis dapibus
+        varius ut et leo. Proin eget lectus id nisl dignissim sollicitudin non a justo. </p>
+    <div class="above-table">
+        <div id="table"></div>
+    </div>
+
+
+    <script>
+        function on() {
+          document.getElementById("overlay").style.display = "block";
+        }
+        
+        function pageReload() {
+            location.reload();
+        }
+
+        function off() {
+            document.getElementById("overlay").style.display = "none";
+            pageReload()
+        }
+        </script>
+
+
+    <script src="words.js"></script>
+    <script src="lorem.js"></script>
+    <script src="paragraph.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
