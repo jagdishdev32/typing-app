@@ -360,7 +360,7 @@ function startGameMobile(event) {
     currentNodeElement.classList.add("is-wrong");
   }
 
-  event.target.value = ""
+  // event.target.value = ""
 
 }
 
