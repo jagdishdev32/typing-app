@@ -90,6 +90,25 @@ button.reload-btn {
   display: none;
 }
 
+/* keyboard */
+.mobile-input {
+  display: none;
+}
+
+#keyboard-btn {
+  color: red;
+  border: none;
+  background: none;
+  font-size: 35px;
+}
+
+#mobile-keyboard {
+  width: 0;
+  position: absolute;
+  /* top: 155px; */
+  left: -20px;
+}
+
 
 /* Above table */
 .above-table {
@@ -206,6 +225,11 @@ border-radius: 0;
   color: rgb(24, 140, 192);
 }
 
+@media (max-width: 768px) {
+  .mobile-input {
+    display: block;
+  }
+}
 
 /* Utility */
 .flex {

@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <!-- Overlay message -->
     <div id="overlay">
         <div style="padding:20px">
             <div id="text">
@@ -21,11 +22,12 @@
     </div>
 
 
-
+    <!-- Topbar -->
     <div class="top-bar flex">
         <h1>Typing App</h1>
         <div class="right-top-bar">
             <h1 id="time">
+                <!-- Time-options -->
                 <select name="time-options" id="time-options">
                     <option value="1" selected>1minute</option>
                     <option value="2">2minute</option>
@@ -43,14 +45,24 @@
                 </select>
             <!--</h1>-->
             </h1>
-            
+
+            <!-- Mobile input -->
+            <div class="mobile-input">
+                <button onclick="focusKeyboard()" id="keyboard-btn">⌨</button>
+                <input type="text" id='mobile-keyboard' name='mobile-keyboard' value="" >
+            </div>
+
+            <!-- Reload Page Btn -->
             <a onclick="pageReload()" class="reload-btn reload-main">⟳</a>
         </div>
     </div>
+
+    <!-- Table -->
     <div class="above-table">
         <div id="table"></div>
     </div>
 
+    <!-- Capslock btn -->
     <div class="capslock" id="capslock">
         <h1>Capslock is on</h1>
     </div>
@@ -69,7 +81,28 @@
             document.getElementById("overlay").style.display = "none";
             pageReload()
         }
-        </script>
+
+        let keyboardBtn = document.getElementById('keyboard-btn')
+        let mobileKeyboard = document.getElementById('mobile-keyboard')
+
+        function focusKeyboard() {
+            mobileKeyboard.click();
+            setTimeout(function(){
+                document.getElementById("mobile-keyboard").focus()
+            },1)
+        }
+
+        mobileKeyboard.addEventListener('focusout', () => {
+            // keyboardBtn.innerText = "hello"
+            keyboardBtn.style.color = 'red'
+        })
+
+        mobileKeyboard.addEventListener('focus', () => {
+            keyboardBtn.style.color = 'blue'
+            // keyboardBtn.innerText = "focused"
+        })
+
+    </script>
 
 
     <script src="words.js"></script>
