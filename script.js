@@ -1,4 +1,5 @@
 const timeElement = document.getElementById('time')
+const capslockElement = document.getElementById('capslock')
 //const dataPara = document.getElementById("data-para");
 
 // Getting datatype
@@ -147,9 +148,22 @@ function getWpm(correct, wrong, minutes) {
   // return netWpm
 }
 
-function startGame(event) {
-  // Stopping space-bar scroll
+// For capslock check
+function checkCapslock(event) {
+  if (event.getModifierState("CapsLock")) {
+    capslockElement.style.display = "block";
+    // console.log('on')
+  } else {
+    // console.log('off')
+    capslockElement.style.display = "none"
+  }
+  console.log("pressed");
+}
 
+
+function startGame(event) {
+  
+  // Check if pressed key is space or not
   function checkifspace(event, currentText) {
     if (currentText == ' ') {
       if (event.key == "_" || event.keyCode == 13 ) {
@@ -158,8 +172,12 @@ function startGame(event) {
     }
     return false
   }
-
+  
+  // Stopping space-bar scroll
   event.preventDefault();
+
+  // Check capslock
+  checkCapslock(event)
 
   let currentNodeElement = getCurrentNode(table, currentNode, currentLetter);
   currentText = currentNodeElement.innerText;
