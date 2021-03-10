@@ -1,5 +1,6 @@
 const timeElement = document.getElementById('time')
 const capslockElement = document.getElementById('capslock')
+// const mobileKeyboard = document.getElementById('mobile-keyboard')
 //const dataPara = document.getElementById("data-para");
 
 // Getting datatype
@@ -249,7 +250,7 @@ function startGame(event) {
       } else {
         // When completed para
         console.log("Done");
-        document.removeEventListener("keypress", startGame);
+        // document.removeEventListener("keypress", startGame);
       }
     } else {
       currentNodeElement.nextElementSibling.classList.add("is-current");
@@ -260,11 +261,115 @@ function startGame(event) {
   }
 }
 
+function startGameMobile(event) {
+  console.log(event.target.value)
+  // Check if pressed key is space or not
+  function checkifspace(event, currentText) {
+    if (currentText == ' ') {
+      if (event.target.value == "_" || event.keyCode == 13 ) {
+        return true
+      }
+    }
+    return false
+  }
+  
+  // Stopping space-bar scroll
+  event.preventDefault();
+
+  // Check capslock
+  // checkCapslock(event)
+
+  let currentNodeElement = getCurrentNode(table, currentNode, currentLetter);
+  currentText = currentNodeElement.innerText;
+  currentNodeElement.classList.add("is-current");
+
+  if (currentText == ("" || "_" || " " || "<br>" || '/\n/') || currentText.charCodeAt(0) == 10) {
+    currentText = " ";
+    event.preventDefault();
+  }
+
+  if (event.target.value == currentText || checkifspace(event, currentText)) {
+    currentNodeElement.classList.remove("is-current");
+    if (!currentNodeElement.classList.contains("is-wrong")) {
+      currentNodeElement.classList.add("is-correct");
+    }
+
+    //  For Timeup and timechange
+    if (first) {
+      first = false;
+      let minutes = 1
+      // Setting minutes to option value
+      minutes = document.getElementById('time-options').value
+      time.innerText = minutes * 60
+      let timeInterval = setInterval(() => time.innerText -= 1, 1000)
+
+      
+      setTimeout(() => {
+        //   alert("timeOut");
+        let correctWordNumber = document.querySelectorAll(".is-right").length;
+        let correctNumber = document.querySelectorAll(".is-correct").length;
+        let wrongNumber = document.querySelectorAll(".is-wrong").length;
+
+        // Net commented out cause only want to use grossWpm
+        let grossWpm = getWpm(correctNumber, wrongNumber, minutes)
+        // let netWpm = getWpm(correctNumber, wrongNumber, minutes)
+
+        document.getElementById(
+          "text-inner"
+        ).innerText = `
+                        Correct : ${correctNumber}
+                        Wrong : ${wrongNumber}
+                        WPM : ${Math.round(grossWpm)}wpm
+                        Accuracy  : ${Math.round(100 - (correctNumber+wrongNumber)/correctNumber)}%
+                      `;
+        document.getElementById("overlay").style.display = "block";
+        // Removing Game
+        clearInterval(timeInterval)
+        document.removeEventListener("keypress", startGame);
+      }, minutes * 60 * 1000);
+    }
+
+    // Calling next Word
+    if (
+      currentNodeElement.id ==
+      currentNodeElement.parentElement.childElementCount - 1
+    ) {
+
+      currentNode++;
+      currentLetter = 0;
+      currentNodeElement.parentElement.classList.add("is-right");
+      // Checking if have more words ( current word space )
+      if (
+        currentNode !=
+        currentNodeElement.parentElement.parentElement.childElementCount
+      ) {
+          let current = getCurrentNode(table, currentNode, currentLetter)
+          current.classList.add("is-current");
+          checkAndScrollHeightCurrent(current)
+      } else {
+        // When completed para
+        console.log("Done");
+        // document.removeEventListener("keypress", startGame);
+      }
+    } else {
+      currentNodeElement.nextElementSibling.classList.add("is-current");
+      currentLetter++;
+    }
+  } else {
+    currentNodeElement.classList.add("is-wrong");
+  }
+
+  event.target.value = ""
+
+}
+
 let currentNode = 0;
 let currentLetter = 0;
 let keypressed = 0;
 let first = true;
 
 let keypressEvent = document.addEventListener("keypress", startGame, false);
+let mobileKeyboardEvent = document.addEventListener('input', startGameMobile, false)
+
 
 // console.log(table.childNodes[0].childNodes[0].innerText)
