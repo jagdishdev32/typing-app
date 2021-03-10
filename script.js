@@ -262,11 +262,12 @@ function startGame(event) {
 }
 
 function startGameMobile(event) {
-  console.log(event.target.value)
+  // console.log(event.target.value)
+  let value = event.target.value
   // Check if pressed key is space or not
   function checkifspace(event, currentText) {
     if (currentText == ' ') {
-      if (event.target.value == "_" || event.keyCode == 13 ) {
+      if (value[value.length -1 ] == "_" || event.keyCode == 13 ) {
         return true
       }
     }
@@ -288,7 +289,7 @@ function startGameMobile(event) {
     event.preventDefault();
   }
 
-  if (event.target.value == currentText || checkifspace(event, currentText)) {
+  if (value[value.length -1 ] == currentText || checkifspace(event, currentText)) {
     currentNodeElement.classList.remove("is-current");
     if (!currentNodeElement.classList.contains("is-wrong")) {
       currentNodeElement.classList.add("is-correct");
