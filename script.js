@@ -24,6 +24,7 @@ if (
 
 const dataTypeChanged = () => {
   localStorage.setItem("arrayType", dataTypeElement.value);
+  pageReload();
 };
 
 const timeChanged = () => {
@@ -421,3 +422,15 @@ let mobileKeyboardEvent = document.addEventListener(
 );
 
 // console.log(table.childNodes[0].childNodes[0].innerText)
+
+// Adding Caches
+// Checking if service worker supported by browser for caching site
+if ("serviceWorker" in navigator) {
+  // console.log('Service Worker Support');
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("sw_cached_pages.js") // Create any file name and create file with that name
+      .then((reg) => console.log("Service Worker: Registered"))
+      .catch((err) => console.log(`Service Worker: Error: ${err}`));
+  });
+}
