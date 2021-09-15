@@ -37,19 +37,19 @@
                     <option value="15">15minute</option>
                 </select>
                 <!--<h1 id="dataType">-->
-                <select name="dataType-options" id="dataType-options" onchange="pageReload()">
+                <select name="dataType-options" id="dataType-options">
                     <option value="words" selected>Words</option>
                     <option value="paragraph">Para</option>
                     <option value="lorem">Lorem</option>
                     <!-- <option value="random">Random</option> -->
                 </select>
-            <!--</h1>-->
+                <!--</h1>-->
             </h1>
 
             <!-- Mobile input -->
             <div class="mobile-input">
                 <button onclick="focusKeyboard()" id="keyboard-btn">⌨</button>
-                <input type="text" id='mobile-keyboard' name='mobile-keyboard' >
+                <input type="text" id='mobile-keyboard' name='mobile-keyboard'>
             </div>
 
             <!-- Reload Page Btn -->
@@ -70,9 +70,9 @@
 
     <script>
         function on() {
-          document.getElementById("overlay").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
         }
-        
+
         function pageReload() {
             location.reload();
         }
@@ -87,9 +87,9 @@
 
         function focusKeyboard() {
             mobileKeyboard.click();
-            setTimeout(function(){
+            setTimeout(function () {
                 document.getElementById("mobile-keyboard").focus()
-            },1)
+            }, 1)
         }
 
         mobileKeyboard.addEventListener('focusout', () => {
