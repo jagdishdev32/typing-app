@@ -1,46 +1,85 @@
-const timeElement = document.getElementById('time')
-const capslockElement = document.getElementById('capslock')
+// const timeElement = document.getElementById("time");
+const timeElement = document.getElementById("time-options");
+const capslockElement = document.getElementById("capslock");
 // const mobileKeyboard = document.getElementById('mobile-keyboard')
 //const dataPara = document.getElementById("data-para");
 
 // Getting datatype
-const dataType = document.getElementById('dataType-options')
-const dataTypeValue = dataType.value
+const dataTypeElement = document.getElementById("dataType-options");
+let dataTypeValue = dataTypeElement.value;
 
-// For random dataType choosing random datatype
-let dataTypes = ["words", "paragraph", "lorem"]
-let random = dataTypes[Math.floor(Math.random(4)*3)]
-console.log(random)
-let array = "words"
-
-switch (dataTypeValue) {
-  case "words":
-    array = words
-    break;
-  case "paragraph":
-    array = paragraph
-    break;
-  case "lorem":
-    array = lorem
-    break;
-  case "random":
-    array = window[random]
-    break;
-  default:
-  array = words
-  break;
+// Loading Details from Local Stoage
+if (
+  localStorage.length > 1 &&
+  localStorage.getItem("arrayType") &&
+  localStorage.getItem("time")
+) {
+  dataTypeElement.value = localStorage.getItem("arrayType");
+  timeElement.value = localStorage.getItem("time");
+  dataTypeValue = localStorage.getItem("arrayType");
+} else {
+  localStorage.setItem("arrayType", "words");
+  localStorage.setItem("time", 3);
 }
 
-// Suffling wordlist 
-for(let i = array.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * i)
-  const temp = array[i]
-  array[i] = array[j]
-  array[j] = temp
+const dataTypeChanged = () => {
+  localStorage.setItem("arrayType", dataTypeElement.value);
+};
+
+const timeChanged = () => {
+  localStorage.setItem("time", timeElement.value);
+};
+
+dataTypeElement.addEventListener("change", dataTypeChanged);
+timeElement.addEventListener("change", timeChanged);
+
+// dataTypeElement.value = localStorage.getItem("arrayType");
+// timeElement.value = localStorage.getItem("time");
+// dataTypeValue = localStorage.getItem("arrayType");
+
+// For random dataTypeElement choosing random datatype
+let dataTypes = ["words", "paragraph", "lorem"];
+let random = dataTypes[Math.floor(Math.random(4) * 3)];
+let array = "words";
+
+function getArray(arrayType) {
+  switch (arrayType) {
+    case "words":
+      array = words;
+      break;
+    case "paragraph":
+      array = paragraph;
+      break;
+    case "lorem":
+      array = lorem;
+      break;
+    case "random":
+      array = window[random];
+      break;
+    default:
+      array = words;
+      break;
+  }
+  return array;
 }
+
+array = getArray(dataTypeValue);
+
+// Suffling wordlist
+function suffleWordlist(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+  return array;
+}
+
+array = suffleWordlist(array);
 
 //dataPara.innerText = array.join(' ')
-const data = array.join(' ').trim().replace('<br>', ' ');
+const data = array.join(" ").trim().replace("<br>", " ");
 
 function createTable(table, data) {
   function createNode(ele, cls, text = null, id = null) {
@@ -85,8 +124,7 @@ function createTable(table, data) {
   function createWords(words) {
     console.log(words);
     words.map((word) => {
-      if (word != '')
-      createWord(word.trim());
+      if (word != "") createWord(word.trim());
     });
     // createWord(words)
   }
@@ -109,41 +147,44 @@ function getCurrentNode(table, currentWord, currentLetter) {
 }
 
 function scrollAll(element) {
-  
   // Getting value of translateY
   function getValue(str) {
-    let value = str.replace('translateY', "").replace('(', "").replace(')', "").replace("px", "")
-    return value
-
+    let value = str
+      .replace("translateY", "")
+      .replace("(", "")
+      .replace(")", "")
+      .replace("px", "");
+    return value;
   }
 
-  let previousTranlateValue = element.style.transform
+  let previousTranlateValue = element.style.transform;
   if (previousTranlateValue == "") {
-    element.style.transform = "translateY(-58px)"
+    element.style.transform = "translateY(-58px)";
   } else {
-    let value = getValue(previousTranlateValue)
-    element.style.transform = `translateY(${value - 58}px)`
+    let value = getValue(previousTranlateValue);
+    element.style.transform = `translateY(${value - 58}px)`;
   }
-  console.log(element.style.transform)
+  console.log(element.style.transform);
 }
 
 function checkAndScrollHeightCurrent(element) {
-  let currentElementScrollY = element.parentElement.getBoundingClientRect().y
-  let previous = element.parentElement.previousSibling
-  // console.log('previous', previous, element) 
-  let previousElementScrollY = previous.getBoundingClientRect().y
+  let currentElementScrollY = element.parentElement.getBoundingClientRect().y;
+  let previous = element.parentElement.previousSibling;
+  // console.log('previous', previous, element)
+  let previousElementScrollY = previous.getBoundingClientRect().y;
   // console.log(currentElementScrollY,  previousElementScrollY)
-  let sameHeight = (Math.floor(currentElementScrollY) == Math.floor(previousElementScrollY))
+  let sameHeight =
+    Math.floor(currentElementScrollY) == Math.floor(previousElementScrollY);
   // if ()
   if (!sameHeight) {
-    console.log('not-same')
-    scrollAll(element.parentElement.parentElement)
+    console.log("not-same");
+    scrollAll(element.parentElement.parentElement);
   }
 }
 
 function getWpm(correct, wrong, minutes) {
-  let grossWpm = ((correct + wrong) / 5) / minutes
-  return grossWpm
+  let grossWpm = (correct + wrong) / 5 / minutes;
+  return grossWpm;
   // Commeting net value cause want to use only gross wpm
   // let netWpm = grossWpm - (wrong / minutes)
   // return netWpm
@@ -156,35 +197,36 @@ function checkCapslock(event) {
     // console.log('on')
   } else {
     // console.log('off')
-    capslockElement.style.display = "none"
+    capslockElement.style.display = "none";
   }
   console.log("pressed");
 }
 
-
 function startGame(event) {
-  
   // Check if pressed key is space or not
   function checkifspace(event, currentText) {
-    if (currentText == ' ') {
-      if (event.key == "_" || event.keyCode == 13 ) {
-        return true
+    if (currentText == " ") {
+      if (event.key == "_" || event.keyCode == 13) {
+        return true;
       }
     }
-    return false
+    return false;
   }
-  
+
   // Stopping space-bar scroll
   event.preventDefault();
 
   // Check capslock
-  checkCapslock(event)
+  checkCapslock(event);
 
   let currentNodeElement = getCurrentNode(table, currentNode, currentLetter);
   currentText = currentNodeElement.innerText;
   currentNodeElement.classList.add("is-current");
 
-  if (currentText == ("" || "_" || " " || "<br>" || '/\n/') || currentText.charCodeAt(0) == 10) {
+  if (
+    currentText == ("" || "_" || " " || "<br>" || "/\n/") ||
+    currentText.charCodeAt(0) == 10
+  ) {
     currentText = " ";
     event.preventDefault();
   }
@@ -198,13 +240,13 @@ function startGame(event) {
     //  For Timeup and timechange
     if (first) {
       first = false;
-      let minutes = 1
+      let minutes = 1;
       // Setting minutes to option value
-      minutes = document.getElementById('time-options').value
-      time.innerText = minutes * 60
-      let timeInterval = setInterval(() => time.innerText -= 1, 1000)
+      // minutes = document.getElementById("time-options").value;
+      minutes = timeElement.value;
+      time.innerText = minutes * 60;
+      let timeInterval = setInterval(() => (time.innerText -= 1), 1000);
 
-      
       setTimeout(() => {
         //   alert("timeOut");
         let correctWordNumber = document.querySelectorAll(".is-right").length;
@@ -212,20 +254,20 @@ function startGame(event) {
         let wrongNumber = document.querySelectorAll(".is-wrong").length;
 
         // Net commented out cause only want to use grossWpm
-        let grossWpm = getWpm(correctNumber, wrongNumber, minutes)
+        let grossWpm = getWpm(correctNumber, wrongNumber, minutes);
         // let netWpm = getWpm(correctNumber, wrongNumber, minutes)
 
-        document.getElementById(
-          "text-inner"
-        ).innerText = `
+        document.getElementById("text-inner").innerText = `
                         Correct : ${correctNumber}
                         Wrong : ${wrongNumber}
                         WPM : ${Math.round(grossWpm)}wpm
-                        Accuracy  : ${Math.round(100 - (correctNumber+wrongNumber)/correctNumber)}%
+                        Accuracy  : ${Math.round(
+                          100 - (correctNumber + wrongNumber) / correctNumber
+                        )}%
                       `;
         document.getElementById("overlay").style.display = "block";
         // Removing Game
-        clearInterval(timeInterval)
+        clearInterval(timeInterval);
         document.removeEventListener("keypress", startGame);
       }, minutes * 60 * 1000);
     }
@@ -235,7 +277,6 @@ function startGame(event) {
       currentNodeElement.id ==
       currentNodeElement.parentElement.childElementCount - 1
     ) {
-
       currentNode++;
       currentLetter = 0;
       currentNodeElement.parentElement.classList.add("is-right");
@@ -244,9 +285,9 @@ function startGame(event) {
         currentNode !=
         currentNodeElement.parentElement.parentElement.childElementCount
       ) {
-          let current = getCurrentNode(table, currentNode, currentLetter)
-          current.classList.add("is-current");
-          checkAndScrollHeightCurrent(current)
+        let current = getCurrentNode(table, currentNode, currentLetter);
+        current.classList.add("is-current");
+        checkAndScrollHeightCurrent(current);
       } else {
         // When completed para
         console.log("Done");
@@ -263,17 +304,17 @@ function startGame(event) {
 
 function startGameMobile(event) {
   // console.log(event.target.value)
-  let value = event.target.value
+  let value = event.target.value;
   // Check if pressed key is space or not
   function checkifspace(event, currentText) {
-    if (currentText == ' ') {
-      if (value[value.length -1 ] == "_" || event.keyCode == 13 ) {
-        return true
+    if (currentText == " ") {
+      if (value[value.length - 1] == "_" || event.keyCode == 13) {
+        return true;
       }
     }
-    return false
+    return false;
   }
-  
+
   // Stopping space-bar scroll
   event.preventDefault();
 
@@ -284,12 +325,18 @@ function startGameMobile(event) {
   currentText = currentNodeElement.innerText;
   currentNodeElement.classList.add("is-current");
 
-  if (currentText == ("" || "_" || " " || "<br>" || '/\n/') || currentText.charCodeAt(0) == 10) {
+  if (
+    currentText == ("" || "_" || " " || "<br>" || "/\n/") ||
+    currentText.charCodeAt(0) == 10
+  ) {
     currentText = " ";
     event.preventDefault();
   }
 
-  if (value[value.length -1 ] == currentText || checkifspace(event, currentText)) {
+  if (
+    value[value.length - 1] == currentText ||
+    checkifspace(event, currentText)
+  ) {
     currentNodeElement.classList.remove("is-current");
     if (!currentNodeElement.classList.contains("is-wrong")) {
       currentNodeElement.classList.add("is-correct");
@@ -298,13 +345,12 @@ function startGameMobile(event) {
     //  For Timeup and timechange
     if (first) {
       first = false;
-      let minutes = 1
+      let minutes = 1;
       // Setting minutes to option value
-      minutes = document.getElementById('time-options').value
-      time.innerText = minutes * 60
-      let timeInterval = setInterval(() => time.innerText -= 1, 1000)
+      minutes = document.getElementById("time-options").value;
+      time.innerText = minutes * 60;
+      let timeInterval = setInterval(() => (time.innerText -= 1), 1000);
 
-      
       setTimeout(() => {
         //   alert("timeOut");
         let correctWordNumber = document.querySelectorAll(".is-right").length;
@@ -312,20 +358,20 @@ function startGameMobile(event) {
         let wrongNumber = document.querySelectorAll(".is-wrong").length;
 
         // Net commented out cause only want to use grossWpm
-        let grossWpm = getWpm(correctNumber, wrongNumber, minutes)
+        let grossWpm = getWpm(correctNumber, wrongNumber, minutes);
         // let netWpm = getWpm(correctNumber, wrongNumber, minutes)
 
-        document.getElementById(
-          "text-inner"
-        ).innerText = `
+        document.getElementById("text-inner").innerText = `
                         Correct : ${correctNumber}
                         Wrong : ${wrongNumber}
                         WPM : ${Math.round(grossWpm)}wpm
-                        Accuracy  : ${Math.round(100 - (correctNumber+wrongNumber)/correctNumber)}%
+                        Accuracy  : ${Math.round(
+                          100 - (correctNumber + wrongNumber) / correctNumber
+                        )}%
                       `;
         document.getElementById("overlay").style.display = "block";
         // Removing Game
-        clearInterval(timeInterval)
+        clearInterval(timeInterval);
         document.removeEventListener("keypress", startGame);
       }, minutes * 60 * 1000);
     }
@@ -335,7 +381,6 @@ function startGameMobile(event) {
       currentNodeElement.id ==
       currentNodeElement.parentElement.childElementCount - 1
     ) {
-
       currentNode++;
       currentLetter = 0;
       currentNodeElement.parentElement.classList.add("is-right");
@@ -344,9 +389,9 @@ function startGameMobile(event) {
         currentNode !=
         currentNodeElement.parentElement.parentElement.childElementCount
       ) {
-          let current = getCurrentNode(table, currentNode, currentLetter)
-          current.classList.add("is-current");
-          checkAndScrollHeightCurrent(current)
+        let current = getCurrentNode(table, currentNode, currentLetter);
+        current.classList.add("is-current");
+        checkAndScrollHeightCurrent(current);
       } else {
         // When completed para
         console.log("Done");
@@ -361,7 +406,6 @@ function startGameMobile(event) {
   }
 
   // event.target.value = ""
-
 }
 
 let currentNode = 0;
@@ -370,7 +414,10 @@ let keypressed = 0;
 let first = true;
 
 let keypressEvent = document.addEventListener("keypress", startGame, false);
-let mobileKeyboardEvent = document.addEventListener('input', startGameMobile, false)
-
+let mobileKeyboardEvent = document.addEventListener(
+  "input",
+  startGameMobile,
+  false
+);
 
 // console.log(table.childNodes[0].childNodes[0].innerText)
